@@ -1,0 +1,60 @@
+6 computers
+0	13
+1	1800
+2	305120
+3	5662565
+4	5633742
+5	1124271
+6	97350
+7	4393
+8	248
+9	11
+50 minutes
+2,788,435,026
+
+9 computers
+0	11
+1	1642
+2	290603
+3	3566149
+4	6368971
+5	1449799
+6	79193
+7	3789
+8	221
+9	8
+50 minutes
+2,788,425,915
+
+12 computers
+0	12
+1	459
+2	76019
+3	3427490
+4	8026292
+5	1238487
+6	57523
+7	3073
+8	156
+9	1
+50 minutes
+2,788,428,574
+
+1. Yeah so they all took about 50 minutes give or take rounding error on the graphs. So the first one did thirteen searches and the second did eleven and the third did 12. I used fifty reducers for all of them because I wanted to control that number so as to better compare the performances of the cluster sizes under the same conditions.
+
+2. Well the mean is like 3.8 so I guess you could call that the 50th percentile even though it's not really since the data is discrete. So my back-of-the-envelope calculations give a standard deviation of like .61 so that means the 90th percentile would have to be 4.62 or so and the 95th will be 4.84. Since the data is normalish. More or less, I mean. Not really, but that's statistics.
+
+3.
+6: 12.1 MB/sec or so
+9: 10.2 MB/sec approximately
+12: 11.2 MB/sec give or take
+
+4. The speedup for 12 and 9 relative to 6 was not. It got slower. 9 was 84% as fast as 6, and 12 was 93% as fast. The scaling is terrible. Hadoop parallelizes my work horribly, with the only saving grace being that it isn't my work actually.
+
+5. The combiner makes the histogramming a bit faster by doing some of the adding up how many paths of each length you had in advance of the reduce phase so you have less reducing to do. It doesn't affect performance much since the histogramming is only a small part of the overall task, while the bfsing is a huge part and has no combiner. Maybe if I'd made some sort of super-special combiner-compatible implementation of the first two phases, I'd've been able to use a combiner there, but in general on those two phases you're gonna want all the data in hand before you start reducing, so a combiner would've caused some issues.
+
+6. For 6 it was .09 dollars per gigabyte. For 9 it was .17. For 12 it was .20.
+
+7. I used $16.32. Is what the computer said. Doesn't look bogus.
+
+8. Nope!!
